@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title> Chatroom </title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <!-- ===JS=== -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            console.log("Jquery Running");
+
+            var socket = io.connect(); //connect socket
+            var name = prompt("What is your name?");
+
+            if (name === null){
+                alert("Reload if you want to join!");
+                location.reload();
+            }
+            else if (name === "" || name.length < 3) {
+                alert("No name was entered or it was too short, try again!");
+                location.reload();
+            }
+            else if (name.length > 3) {
+                // user typed something and hit OK
+                socket.emit("got_new_user", {user: name}); // new user emits back to server
+                console.log("name accepted");
+            }
+
+            socket.on("new_user_announcement", function(data){ //response from server of a new user
+                $('#announcement').html(" ");
+                console.log(data);
+                console.log(data.user_name.user);
+                console.log("New person has arrived! Name: " + data.user_name.user);
+                $("#announcement").html("<p>" + data.user_name.user + " has arrived!</p>").fadeIn();
+                $("#announcement").delay(6000).fadeOut();
+
+            });
+            socket.on("got_user", function(data){ //response from server of a new user
+                $("#welcome").html("");
+                console.log(data.user.user);
+                console.log("Got you in " + data.user.user);
+                $("#welcome").html("<p> Welcome, " + data.user.user + "</p>").fadeIn();
+                $("#welcome").delay(6000).fadeOut();
+            });
+            socket.on("update_people", function(data){ //response from server of a new user
+                $("#whoIsHere").html("");
+                $('#whoIsHere').append("<h5>Who is currently here: </h5>");
+                console.log(data);
+                for( var i = 0; i<data.everyone.length; i++){
+                    $('#whoIsHere').append("<p id =' " + data.everyone[i].name +"' >" + data.everyone[i].name + ",</p>")
+                }
+            });
+            socket.on("announce_who_left", function(data){ //response from server of a new user
+                $('#announcement').html(" ");
+                console.log(data);
+                $("#announcement").html("<p>" + data.left + " has left the chat!").fadeIn();
+                $("#announcement").delay(4000).fadeOut();
+            });
+            $("#submit").click(function(){
+                var text = $("#input").val();
+                console.log(text);
+                socket.emit("user_typed", {text: text}); // new user emits back to server
+                return false; // do not reload page!
+            });
+            socket.on("update_chat", function(data){ //response from server of a new user
+                console.log(data);
+                $("#input").val(" ");
+                $("#chat").prepend("<p>" + data.person + ":  "+ data.chat.text + "</p><hr>");
+            });
+        });
+        </script>
+</head>
+<body>
+    <div class="col-md-12" id="head">
+        <h1>Chatroom</h1>
+    </div>
+    <div class="col-md-12" id="announce">
+        <div id="announcement"></div>
+    </div>
+    <div class="col-md-12"id="hello">
+        <div id="welcome"></div>
+    </div>
+    <div class="col-md-12" id="users">
+        <div id="whoIsHere"></div>
+    </div>
+    <div class="col-md-12" id="display">
+        <div id="chat"></div>
+        <input type="text" name="userInput" id="input" placeholder="Type here to chat!"><button id="submit">Submit</button>
+    </div>
+</body>
+</html>
