@@ -35,30 +35,34 @@
                 console.log(data);
                 console.log(data.user_name.user);
                 console.log("New person has arrived! Name: " + data.user_name.user);
-                $("#announcement").html("<p>" + data.user_name.user + " has arrived!</p>").fadeIn();
-                $("#announcement").delay(6000).fadeOut();
+                $("#announce").delay(500).slideDown("slow");
+                $("#announcement").html("<p>" + data.user_name.user + " has arrived!</p>");
+                $("#announce").delay(5000).slideUp("slow");
 
             });
             socket.on("got_user", function(data){ //response from server of a new user
                 $("#welcome").html("");
                 console.log(data.user.user);
                 console.log("Got you in " + data.user.user);
-                $("#welcome").html("<p> Welcome, " + data.user.user + "</p>").fadeIn();
-                $("#welcome").delay(6000).fadeOut();
+                $("#hello").delay(500).slideDown("slow");
+                $("#welcome").html("<p> Welcome, " + data.user.user + "!</p>");
+                $("#hello").delay(5000).slideUp("slow");
+
             });
             socket.on("update_people", function(data){ //response from server of a new user
-                $("#whoIsHere").html("");
-                $('#whoIsHere').append("<h5>Who is currently here: </h5>");
                 console.log(data);
+                $("#whoIsHere").hide();
+                $("#whoIsHere").html(" ");
                 for( var i = 0; i<data.everyone.length; i++){
-                    $('#whoIsHere').append("<p id =' " + data.everyone[i].name +"' >" + data.everyone[i].name + ",</p>")
+                    $('#whoIsHere').append("<p id =' " + data.everyone[i].name +"' >" + data.everyone[i].name + "</p>").delay(150).slideDown("slow");
                 }
             });
             socket.on("announce_who_left", function(data){ //response from server of a new user
                 $('#announcement').html(" ");
                 console.log(data);
-                $("#announcement").html("<p>" + data.left + " has left the chat!").fadeIn();
-                $("#announcement").delay(4000).fadeOut();
+                $("#announce").delay(500).slideDown("slow");
+                $("#announcement").html("<p>" + data.left + " has left the chat!");
+                $("#announce").delay(5000).slideUp("slow");
             });
             $("#submit").click(function(){
                 var text = $("#input").val();
@@ -69,7 +73,7 @@
             socket.on("update_chat", function(data){ //response from server of a new user
                 console.log(data);
                 $("#input").val(" ");
-                $("#chat").prepend("<p>" + data.person + ":  "+ data.chat.text + "</p><hr>");
+                $("#chat").prepend("<p>" + data.person + ":  "+ data.chat.text + "</p>");
             });
         });
         </script>
@@ -84,12 +88,19 @@
     <div class="col-md-12"id="hello">
         <div id="welcome"></div>
     </div>
-    <div class="col-md-12" id="users">
-        <div id="whoIsHere"></div>
+    <div id="display">
+        <div id="users" class="col-md-4">
+            <h3>Who is currently here:</h3>
+            <div id="whoIsHere"></div>
+        </div>
+        <div class="col-md-8">
+            <div id="chat"></div>
+            <input type="text" name="userInput" id="input" placeholder="Type here to chat!">
+            <button id="submit" class="btn btn-primary outline">Submit</button>
+        </div>
     </div>
-    <div class="col-md-12" id="display">
-        <div id="chat"></div>
-        <input type="text" name="userInput" id="input" placeholder="Type here to chat!"><button id="submit">Submit</button>
+    <div class="col-md-12" id="bottom">
+        <p>Created with NodeJS, Express and SocketIO. Designed with Bootstrap!</p>
     </div>
 </body>
 </html>

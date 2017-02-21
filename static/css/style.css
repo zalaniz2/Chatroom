@@ -1,55 +1,97 @@
 body{
+    background-color: #9fa8da;
 }
 #head{
     text-align: center;
-    background-color: lightblue;
+    background-color: #5e35b1;
     padding: 20px;
+}
+#head h1{
+    color: white;
 }
 #announce{
+    display: none;
     text-align: center;
-    background-color: salmon;
-    height: 50px;
+    background-color: #212121;
+    height: 75px;
 }
 #hello{
+    display: none;
     text-align: center;
-    background-color: lightgreen;
-    height: 50px;
+    background-color: #212121;
+    height: 75px;
 }
 #hello p{
-    padding-top: 15px;
+    padding-top: 25px;
+    color: white;
+    font-weight: bold;
 }
 #announce p{
-    padding-top: 15px;
-}
-#users p, h5{
-    display: inline-block;
-    margin-left: 5px;
-    padding-top: 15px;
+    padding-top: 25px;
+    color: white;
+    font-weight: bold;
 }
 #users{
-    background-color: lightgrey;
-    height: 65px;
-    text-align: center;
-}
-#display{
-    margin-left: 300px;
-    padding: 50px;
-}
-#display input{
-    width: 35%;
-    margin-left: 45px;
     margin-top: 10px;
 }
-#chat{
-    width: 50%;
-    height: 350px;
-    background-color: lightyellow;
-    margin-top: 15px;
-    border: 5px solid black;
-    padding: 20px;
-    padding-top: 25px;
+#whoIsHere{
     overflow-y: scroll;
+}
+#display input{
+    width: 85%;
+    margin-top: -5px;
+    padding: 10px;
+    border: 4px solid #212121;
+}
+#display p, h3{
+    text-align: center;
+    font-weight: bold;
+}
+#chat{
+    width: 85%;
+    height: 350px;
+    background-color: #212121;
+    border: 5px solid #212121;
+    margin-top: 15px;
+    overflow-y: scroll;
+    color: white;
+    font-weight: bold;
 }
 #chat p{
     padding-left: 10px;
+    padding-top: 5px;
+    text-align: left;
+}
+.btn.outline {
+	background: none;
+	padding: 12px 22px;
+}
+.btn-primary.outline {
+	border: 2px solid black;
+	color: black;
+    background-color: white;
+}
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+	color:  #5e35b1;
+	border-color:  #5e35b1;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+	border-color: black;
+	color: #212121;
+    background-color: white;
+	box-shadow: none;
+}
+#bottom{
+    text-align: center;
+    background-color: #5e35b1;
+    padding: 25px;
+    margin-top: 50px;
+}
+#bottom p{
+    font-weight: bold;
+    color: white;
+}
+#users hr{
+    background-color: #9575cd;
+    color: #9575cd;
 }
