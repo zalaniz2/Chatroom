@@ -95,3 +95,19 @@ body{
     background-color: #9575cd;
     color: #9575cd;
 }
+
+@media only screen and (max-width : 666px){
+    #chat{
+        width: 95%;
+        margin-left: 10px;
+    }
+    #display input{
+        width: 95%;
+        margin-left: 10px;
+    }
+    button{
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+}

@@ -1,13 +1,13 @@
 {
   "name": "Chatroom",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chatroom App made with Node, Express and Sockets. Tracks when someone connects, leaves and who is currently connected.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Zach Alaniz",
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.5.6",

@@ -30,7 +30,7 @@
                 console.log("name accepted");
             }
 
-            socket.on("new_user_announcement", function(data){ //response from server of a new user
+            socket.on("new_user_announcement", function(data){ //anouncing new user to other connected 
                 $('#announcement').html(" ");
                 console.log(data);
                 console.log(data.user_name.user);
@@ -49,7 +49,7 @@
                 $("#hello").delay(5000).slideUp("slow");
 
             });
-            socket.on("update_people", function(data){ //response from server of a new user
+            socket.on("update_people", function(data){ //response from server of who is connected
                 console.log(data);
                 $("#whoIsHere").hide();
                 $("#whoIsHere").html(" ");
@@ -57,7 +57,7 @@
                     $('#whoIsHere').append("<p id =' " + data.everyone[i].name +"' >" + data.everyone[i].name + "</p>").delay(150).slideDown("slow");
                 }
             });
-            socket.on("announce_who_left", function(data){ //response from server of a new user
+            socket.on("announce_who_left", function(data){ //response from server of who disconnected
                 $('#announcement').html(" ");
                 console.log(data);
                 $("#announce").delay(500).slideDown("slow");
@@ -70,7 +70,7 @@
                 socket.emit("user_typed", {text: text}); // new user emits back to server
                 return false; // do not reload page!
             });
-            socket.on("update_chat", function(data){ //response from server of a new user
+            socket.on("update_chat", function(data){ //response from server of chat update
                 console.log(data);
                 $("#input").val(" ");
                 $("#chat").prepend("<p>" + data.person + ":  "+ data.chat.text + "</p>");
