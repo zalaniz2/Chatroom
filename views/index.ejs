@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title> Chatroom </title>
         <!-- Latest compiled and minified CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
         <!-- ===JS=== -->
@@ -20,17 +21,17 @@
                 alert("Reload if you want to join!");
                 location.reload();
             }
-            else if (name === "" || name.length < 3) {
+            else if (name === "" || name.length <= 2) {
                 alert("No name was entered or it was too short, try again!");
                 location.reload();
             }
-            else if (name.length > 3) {
+            else if (name.length >= 3) {
                 // user typed something and hit OK
                 socket.emit("got_new_user", {user: name}); // new user emits back to server
                 console.log("name accepted");
             }
 
-            socket.on("new_user_announcement", function(data){ //anouncing new user to other connected 
+            socket.on("new_user_announcement", function(data){ //anouncing new user to other connected
                 $('#announcement').html(" ");
                 console.log(data);
                 console.log(data.user_name.user);
@@ -71,16 +72,17 @@
                 return false; // do not reload page!
             });
             socket.on("update_chat", function(data){ //response from server of chat update
+                var date = new Date().toLocaleTimeString();
                 console.log(data);
                 $("#input").val(" ");
-                $("#chat").prepend("<p>" + data.person + ":  "+ data.chat.text + "</p>");
+                $("#chat").prepend("<p>" + date + " "+ data.person + ":  "+ data.chat.text + "</p>").fadeIn();
             });
         });
         </script>
 </head>
 <body>
     <div class="col-md-12" id="head">
-        <h1>Chatroom</h1>
+        <h1>Chatroom<i class="material-icons">dialpad</i></h1>
     </div>
     <div class="col-md-12" id="announce">
         <div id="announcement"></div>
@@ -90,7 +92,7 @@
     </div>
     <div id="display">
         <div id="users" class="col-md-4">
-            <h3>Who is currently here:</h3>
+            <h3> <i class="material-icons">supervisor_account</i> Who is currently here:</h3>
             <div id="whoIsHere"></div>
         </div>
         <div class="col-md-8">
